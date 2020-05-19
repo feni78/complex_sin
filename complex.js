@@ -40,23 +40,30 @@
         ctx.fillText(`取得座標 x=${x}, y=${y}`, 300, 50);
       }
 
-      //クリック座標から伸びる線（途中）
+      //原点からクリック座標に伸びる線
+      ctx.beginPath();
+      ctx.moveTo(clickX,clickY);
+      ctx.lineTo(oX, oY);
+      ctx.stroke();
+
+      //青線に変更
       ctx.strokeStyle = "blue";
       ctx.fillStyle = "blue";
       ctx.setLineDash([1, 1]);
 
+      //クリック座標から伸びる横線
       ctx.beginPath();
       ctx.moveTo(clickX,clickY);
       ctx.lineTo(1000, clickY);
       ctx.stroke();
 
-      
-
+      //クリック座標から伸びる縦線
       ctx.beginPath();
       ctx.moveTo(clickX, clickY);
       ctx.lineTo(clickX, 1000);
       ctx.stroke();
 
+      //青線をもとに戻す
       ctx.setLineDash([]);
     });
 
