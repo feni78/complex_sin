@@ -97,43 +97,45 @@
     ctx.lineWidth = 1;
     ctx.strokeStyle = "black";
     ctx.fillStyle = "black";
+    var axisLength = 125;//軸の長さ
 
     //x軸描画
     // x座標軸を描画
     ctx.beginPath();
-    ctx.moveTo(0, oY);
-    ctx.lineTo(canvasW, oY);
+    ctx.moveTo(axisLength, oY);
+    ctx.lineTo(canvasW - axisLength, oY);
     ctx.stroke();
     // x座標軸の矢印を描画
     ctx.beginPath();
-    ctx.moveTo(canvasW, oY);
-    ctx.lineTo(canvasW - 10, oY - 7);
-    ctx.lineTo(canvasW - 10, oY + 7);
+    ctx.moveTo(canvasW - axisLength, oY);
+    ctx.lineTo(canvasW - axisLength - 10, oY - 7);
+    ctx.lineTo(canvasW - axisLength - 10, oY + 7);
     ctx.fill();
 
     //y軸描画
     // y座標軸を描画
     ctx.beginPath();
-    ctx.moveTo(oX, 0);
-    ctx.lineTo(oX, canvasH);
+    ctx.moveTo(oX, axisLength);
+    ctx.lineTo(oX, canvasH - axisLength);
     ctx.stroke();
     // y座標軸の矢印を描画
     ctx.beginPath();
-    ctx.moveTo(oX, 0);
-    ctx.lineTo(oX - 7, 10);
-    ctx.lineTo(oX + 7, 10);
+    ctx.moveTo(oX, axisLength);
+    ctx.lineTo(oX - 7, axisLength + 10);
+    ctx.lineTo(oX + 7, axisLength + 10);
     ctx.fill();
 
+    //座標軸の文字と円を描画
     ctx.beginPath();
     var maxWidth = 100;
     ctx.fillText('Ｏ', oX - 13, oY + 13, maxWidth);
-    ctx.fillText('-j', oX - 115, oY + 13, maxWidth);
+    ctx.fillText('-1', oX - 115, oY + 13, maxWidth);
+    ctx.fillText('1', oX + 105, oY + 13, maxWidth);
+    ctx.fillText('+j', oX - 17, oY - 105, maxWidth);
+    ctx.fillText('-j', oX - 13, oY + 112, maxWidth);
+    ctx.fillText('虚部', oX - 10, oY - axisLength - 10, maxWidth);
+    ctx.fillText('実部', oX + axisLength + 10, oY + 4, maxWidth);
     ctx.arc(oX, oY, 100, 0, 2 * Math.PI, true);
     ctx.stroke();//表示
-
-
-    // 原点を表す文字「Ｏ」を描画
-    
-  
   }
 }
