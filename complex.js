@@ -94,7 +94,7 @@
     ctx.clearRect(0, 0, canvasW, canvasH);
 
     //座標軸のスタイル指定
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.strokeStyle = "black";
     ctx.fillStyle = "black";
     var axisLength = 125;//軸の長さ
