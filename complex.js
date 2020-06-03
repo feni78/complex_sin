@@ -3,8 +3,8 @@
 
   var canvas = document.querySelector('canvas');//canvas取得
   var ctx = canvas.getContext('2d');//context取得
-  var canvasW = 500;//canvasの横幅
-  var canvasH = 500;//canvasの縦幅
+  var canvasW = 1000;//canvasの横幅
+  var canvasH = 1000;//canvasの縦幅
   var oX;//原点x
   var oY;//原点y
   var clickX;//クリック座標x
@@ -13,8 +13,8 @@
   window.onload = function(){
     canvas.width = canvasW;//canvasサイズ設定
     canvas.height = canvasH;
-    oX = Math.ceil(canvasW/2);//原点を求めて代入
-    oY = Math.ceil(canvasH/2);
+    oX = Math.ceil(canvasW/4);//原点を求めて代入
+    oY = Math.ceil(canvasH/4);
     drawInit();//座標軸初期化
 
     //クリック時に行う描画の処理
@@ -103,20 +103,20 @@
     // x座標軸を描画
     ctx.beginPath();
     ctx.moveTo(axisLength, oY);
-    ctx.lineTo(canvasW - axisLength, oY);
+    ctx.lineTo(canvasW -500 - axisLength, oY);
     ctx.stroke();
     // x座標軸の矢印を描画
     ctx.beginPath();
-    ctx.moveTo(canvasW - axisLength, oY);
-    ctx.lineTo(canvasW - axisLength - 10, oY - 7);
-    ctx.lineTo(canvasW - axisLength - 10, oY + 7);
+    ctx.moveTo(canvasW -500 - axisLength, oY);//circleを左寄せするため-500
+    ctx.lineTo(canvasW -500 - axisLength - 10, oY - 7);
+    ctx.lineTo(canvasW -500 - axisLength - 10, oY + 7);
     ctx.fill();
 
     //y軸描画
     // y座標軸を描画
     ctx.beginPath();
     ctx.moveTo(oX, axisLength);
-    ctx.lineTo(oX, canvasH - axisLength);
+    ctx.lineTo(oX, canvasH -500 - axisLength);
     ctx.stroke();
     // y座標軸の矢印を描画
     ctx.beginPath();
