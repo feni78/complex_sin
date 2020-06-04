@@ -46,6 +46,17 @@
       ctx.lineTo(oX, oY);
       ctx.stroke();
 
+      //sin波
+      ctx.beginPath();
+      ctx.moveTo(canvasW/2,100);
+     
+      // ctx.lineTo(250, Math.sin(0.01));
+      for (var i = 500; i <= 1000; i += 4) {
+        ctx.lineTo(i,250-100* Math.sin(0.05*i));
+      }
+      // ctx.lineTo(1000, canvasH/4);
+      ctx.stroke();
+
       //青線に変更
       ctx.strokeStyle = "blue";
       ctx.fillStyle = "blue";
