@@ -62,11 +62,11 @@
 
       //sin波
       ctx.beginPath();
-      ctx.moveTo(450,250);//始点いじり、ほんとはよくない
+      ctx.moveTo(450,450);//始点いじり、ほんとはよくない
      
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (Math.sin(2 * (Math.PI / 180)*i*0.4)));
+        ctx.lineTo(i,550-100* (Math.cos(2 * (Math.PI / 180)*i*0.4)));
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
