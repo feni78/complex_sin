@@ -46,16 +46,33 @@
       ctx.lineTo(oX, oY);
       ctx.stroke();
 
+
+      //********************************************************
+      //8月進行分！！！！！！！！！！！！！
       //sin波
       ctx.beginPath();
-      ctx.moveTo(canvasW/2,100);
+      ctx.moveTo(450,250);//始点いじり、ほんとはよくない
      
       // ctx.lineTo(250, Math.sin(0.01));
-      for (var i = 500; i <= 1000; i += 4) {
-        ctx.lineTo(i,250-100* Math.sin(0.05*i));
+      for (var i = 450; i <= 900; i += 1) {
+        ctx.lineTo(i,250-100* (Math.sin(2 * (Math.PI / 180)*i*0.4)));
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
+
+      //sin波
+      ctx.beginPath();
+      ctx.moveTo(450,250);//始点いじり、ほんとはよくない
+     
+      // ctx.lineTo(250, Math.sin(0.01));
+      for (var i = 450; i <= 900; i += 1) {
+        ctx.lineTo(i,250-100* (Math.sin(2 * (Math.PI / 180)*i*0.4)));
+      }
+      // ctx.lineTo(1000, canvasH/4);
+      ctx.stroke();
+      //********************************************************
+
+
 
       //青線に変更
       ctx.strokeStyle = "blue";
