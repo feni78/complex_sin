@@ -56,6 +56,7 @@
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
         ctx.lineTo(i,250-100* (Math.sin(2 * (Math.PI / 180)*i*0.4)));
+        //0.4のところに+1すれば位相
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
@@ -165,5 +166,81 @@
     ctx.fillText('実部', oX + axisLength + 10, oY + 4, maxWidth);
     ctx.arc(oX, oY, 100, 0, 2 * Math.PI, true);
     ctx.stroke();//表示
+
+    //右座標軸
+    ctx.beginPath();
+    ctx.moveTo(425, 250);
+    ctx.lineTo(925,250);
+    ctx.stroke();
+    // // y座標軸の矢印を描画
+    // ctx.beginPath();
+    // ctx.moveTo(925, 250);
+    // ctx.lineTo(925 - 7, 250 - 10);
+    // ctx.lineTo(925 + 7, 250 + 10);
+    // ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(450, 125);
+    ctx.lineTo(450,375);
+    ctx.stroke();
+
+    //0.5
+    ctx.beginPath();
+    ctx.moveTo(675, 240);
+    ctx.lineTo(675,260);
+    ctx.stroke();
+    //1
+    ctx.beginPath();
+    ctx.moveTo(900, 240);
+    ctx.lineTo(900,260);
+    ctx.stroke();
+    //tate1
+    ctx.beginPath();
+    ctx.moveTo(445, 150);
+    ctx.lineTo(455,150);
+    ctx.stroke();
+    //tate-1
+    ctx.beginPath();
+    ctx.moveTo(445, 350);
+    ctx.lineTo(455,350);
+    ctx.stroke();
+
+
+    //下座標軸
+    ctx.beginPath();
+    ctx.moveTo(425, 550);
+    ctx.lineTo(925,550);
+    ctx.stroke();
+    // // y座標軸の矢印を描画
+    // ctx.beginPath();
+    // ctx.moveTo(925, 250);
+    // ctx.lineTo(925 - 7, 250 - 10);
+    // ctx.lineTo(925 + 7, 250 + 10);
+    // ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(450, 425);
+    ctx.lineTo(450,675);
+    ctx.stroke();
+
+    //0.5
+    ctx.beginPath();
+    ctx.moveTo(675, 540);
+    ctx.lineTo(675,560);
+    ctx.stroke();
+    //1
+    ctx.beginPath();
+    ctx.moveTo(900, 540);
+    ctx.lineTo(900,560);
+    ctx.stroke();
+    
+    //tate1
+    ctx.beginPath();
+    ctx.moveTo(445, 450);
+    ctx.lineTo(455,450);
+    ctx.stroke();
+    //tate-1
+    ctx.beginPath();
+    ctx.moveTo(445, 650);
+    ctx.lineTo(455,650);
+    ctx.stroke();
   }
 }
