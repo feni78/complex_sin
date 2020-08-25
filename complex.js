@@ -48,26 +48,28 @@
 
 
       //********************************************************
-      //8月進行分！！！！！！！！！！！！！
       //sin波
       ctx.beginPath();
-      ctx.moveTo(450,250);//始点いじり、ほんとはよくない
+      ctx.moveTo(450,250);//始点いじり
+
+      var kaku = 2;//角周波数調整
+      var isou = y;//位相調整
+      //後々スライダーで変更できるようにする
      
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (Math.sin(2 * (Math.PI / 180)*i*0.4)));
-        //0.4のところに+1すれば位相
+        ctx.lineTo(i,250-100* (Math.sin(kaku * (Math.PI / 180)*i*0.4 + isou)));
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
 
       //sin波
       ctx.beginPath();
-      ctx.moveTo(450,450);//始点いじり、ほんとはよくない
+      ctx.moveTo(450,450);//始点いじり
      
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,550-100* (Math.cos(2 * (Math.PI / 180)*i*0.4)));
+        ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
