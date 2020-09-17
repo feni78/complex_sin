@@ -20,6 +20,9 @@
     //クリック時に行う描画の処理
     canvas.addEventListener("click", (e) => {
       if(clickX<352 && clickX>148&&clickY<352 &&clickY>148 ){
+        // if(clickX>350 && clickX<355){
+        //   clickX = 350;
+        // }
       //座標軸初期化
       drawInit();
 
@@ -68,7 +71,7 @@
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
 
-      //sin波
+      //cos波
       ctx.beginPath();
       ctx.moveTo(450,450);//始点いじり
      
@@ -111,7 +114,7 @@
     });
 
     canvas.addEventListener("mousemove", (e) => {
-      ctx.clearRect(0, 0, 150, 150);
+      ctx.clearRect(0, 0, 150, 130);
       ctx.strokeStyle = "black";
       ctx.fillStyle = "black";
 
@@ -255,6 +258,16 @@
     ctx.beginPath();
     ctx.moveTo(445, 650);
     ctx.lineTo(455,650);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(250, 425);
+    ctx.lineTo(250,975);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(125, 450);
+    ctx.lineTo(375,450);
     ctx.stroke();
   }
 }
