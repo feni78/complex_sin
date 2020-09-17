@@ -20,6 +20,7 @@
     //クリック時に行う描画の処理
     canvas.addEventListener("click", (e) => {
       if(clickX<352 && clickX>148&&clickY<352 &&clickY>148 ){
+        //クリック場所制限
         // if(clickX>350 && clickX<355){
         //   clickX = 350;
         // }
@@ -78,6 +79,18 @@
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
         ctx.lineTo(i,550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+        // ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
+      }
+      // ctx.lineTo(1000, canvasH/4);
+      ctx.stroke();
+
+      //cos波
+      ctx.beginPath();
+      ctx.moveTo(250,450);//始点いじり
+     
+      // ctx.lineTo(250, Math.sin(0.01));
+      for (var i = 450; i <= 900; i += 1) {
+        ctx.lineTo(250+100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))),i);
         // ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
       }
       // ctx.lineTo(1000, canvasH/4);
