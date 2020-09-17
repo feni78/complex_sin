@@ -19,6 +19,7 @@
 
     //クリック時に行う描画の処理
     canvas.addEventListener("click", (e) => {
+      if(clickX<352 && clickX>148&&clickY<352 &&clickY>148 ){
       //座標軸初期化
       drawInit();
 
@@ -26,6 +27,8 @@
       var rect = e.target.getBoundingClientRect();
       clickX = e.clientX - Math.floor(rect.left)-2;
       clickY = e.clientY - Math.floor(rect.top)-2 ;
+
+       
       
       //クリック位置の点を描画
       ctx.beginPath(); // パスの初期化
@@ -54,11 +57,13 @@
 
       var kaku = 2;//角周波数調整
       var isou = y;//位相調整
+      console.log(y);
       //後々スライダーで変更できるようにする
      
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (Math.sin(kaku * (Math.PI / 180)*i*0.4 + isou)));
+        ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+        // ctx.lineTo(i,250-100* (Math.sin(kaku * (Math.PI / 180)*i*0.4 + isou)));
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
@@ -69,7 +74,8 @@
      
       // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
+        ctx.lineTo(i,550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+        // ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
       }
       // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
@@ -94,8 +100,14 @@
       ctx.lineTo(clickX, 1000);
       ctx.stroke();
 
+      ctx.beginPath();
+      ctx.moveTo(clickX,550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.lineTo(1000, 550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.stroke();
+
       //青線をもとに戻す
       ctx.setLineDash([]);
+    }
     });
 
     canvas.addEventListener("mousemove", (e) => {
@@ -159,7 +171,7 @@
     //座標軸の文字と円を描画
     ctx.beginPath();
     var maxWidth = 100;
-    ctx.fillText('Ｏ', oX - 13, oY + 13, maxWidth);
+    ctx.fillText('0', oX - 13, oY + 13, maxWidth);
     ctx.fillText('-1', oX - 115, oY + 13, maxWidth);
     ctx.fillText('1', oX + 105, oY + 13, maxWidth);
     ctx.fillText('+j', oX - 17, oY - 105, maxWidth);
