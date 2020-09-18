@@ -58,43 +58,28 @@
       //sin波
       ctx.beginPath();
       ctx.moveTo(450,250);//始点
-
       var kaku = 2;//角周波数調整
-      var isou = y;//位相調整
       //後々スライダーで変更できるようにする
-     
-      // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
-        // ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
         ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(kaku*Math.PI*(i/450)+Math.atan2(y, x))));
-        console.log(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x));
-        // ctx.lineTo(i,250-100* (Math.sin(kaku * (Math.PI / 180)*i*0.4 + isou)));
       }
-      // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
 
-      //cos波
+      //cos波1
       ctx.beginPath();
       ctx.moveTo(450,450);//始点
-     
-      // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
         ctx.lineTo(i,550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*Math.PI*(i/450)+Math.atan2(y, x))));
-        // ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
       }
-      // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
 
-      //cos波
+      //cos波2
       ctx.beginPath();
       ctx.moveTo(250,450);//始点
      
-      // ctx.lineTo(250, Math.sin(0.01));
       for (var i = 450; i <= 900; i += 1) {
         ctx.lineTo(250+100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*Math.PI*(i/450)+Math.atan2(y, x))),i);
-        // ctx.lineTo(i,550-100* (Math.cos(kaku * (Math.PI / 180)*i*0.4+isou)));
       }
-      // ctx.lineTo(1000, canvasH/4);
       ctx.stroke();
       //********************************************************
 
