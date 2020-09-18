@@ -45,6 +45,8 @@
       var y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
       if(x >= -1 && x <=1 && y >= -1 && y <=1){
         ctx.fillText(`取得座標 x=${x}, y=${y}`, 300, 50);
+        ctx.fillText(`振幅 x=${Math.sqrt(x*x+y*y)}`, 300, 70);
+
       }
 
       //原点からクリック座標に伸びる線
@@ -64,7 +66,7 @@
         ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(kaku*Math.PI*(i/450)+Math.atan2(y, x))));
       }
       ctx.stroke();
-
+      ctx.fillText(`位相 x=${(kaku*Math.PI*+Math.atan2(y, x))}`, 300, 90);
       //cos波1
       ctx.beginPath();
       ctx.moveTo(450,450);//始点
