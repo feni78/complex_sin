@@ -17,6 +17,8 @@
     oY = Math.ceil(canvasH/4);
     drawInit();//座標軸初期化
 
+    
+
     //クリック時に行う描画の処理
     canvas.addEventListener("click", (e) => {
       if(clickX<352 && clickX>148&&clickY<352 &&clickY>148 ){
@@ -32,7 +34,7 @@
       clickX = e.clientX - Math.floor(rect.left)-2;
       clickY = e.clientY - Math.floor(rect.top)-2 ;
 
-       
+      
       
       //クリック位置の点を描画
       ctx.beginPath(); // パスの初期化
@@ -44,8 +46,8 @@
       var x = (clickX - oX)/100;//原点からの距離を変換してxに代入
       var y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
       if(x >= -1 && x <=1 && y >= -1 && y <=1){
-        ctx.fillText(`取得座標 x=${x}, y=${y}`, 300, 50);
-        ctx.fillText(`振幅 x=${Math.sqrt(x*x+y*y)}`, 300, 70);
+        ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 300, 50);
+        ctx.fillText(`振幅 ${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 300, 70);
 
       }
 
@@ -59,19 +61,28 @@
       //********************************************************
       //sin波
       ctx.beginPath();
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([1, 1]);
       ctx.moveTo(450,250);//始点
-      var kaku = 2;//角周波数調整
+
+
+      var inputAng = document.getElementById('angular');
+      console.log(inputAng.value);
+      var ang= 3;
+
       //後々スライダーで変更できるようにする
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(kaku*Math.PI*(i/450)+Math.atan2(y, x))));
+        ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(ang*Math.PI*(i/450)+Math.atan2(y, x))));
       }
+      ctx.setLineDash([]);
       ctx.stroke();
-      ctx.fillText(`位相 x=${(kaku*Math.PI*+Math.atan2(y, x))}`, 300, 90);
+      ctx.fillText(`位相 x=${Math.round((ang*Math.PI*+Math.atan2(y, x))*1000)/1000}`, 300, 90);
       //cos波1
       ctx.beginPath();
       ctx.moveTo(450,450);//始点
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*Math.PI*(i/450)+Math.atan2(y, x))));
+        ctx.lineTo(i,550-100* (Math.sqrt(x*x+y*y)*Math.cos(ang*Math.PI*(i/450)+Math.atan2(y, x))));
       }
       ctx.stroke();
 
@@ -80,7 +91,7 @@
       ctx.moveTo(250,450);//始点
      
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(250+100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*Math.PI*(i/450)+Math.atan2(y, x))),i);
+        ctx.lineTo(250+100* (Math.sqrt(x*x+y*y)*Math.cos(ang*Math.PI*(i/450)+Math.atan2(y, x))),i);
       }
       ctx.stroke();
       //********************************************************
@@ -105,8 +116,8 @@
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.moveTo(clickX,550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
-      ctx.lineTo(1000, 550-100* (Math.sqrt(x*x+y*y)*Math.cos(kaku*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.moveTo(clickX,550-100* (Math.sqrt(x*x+y*y)*Math.cos(ang*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.lineTo(1000, 550-100* (Math.sqrt(x*x+y*y)*Math.cos(ang*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
       ctx.stroke();
 
       //青線をもとに戻す
@@ -115,9 +126,11 @@
     });
 
     canvas.addEventListener("mousemove", (e) => {
-      ctx.clearRect(0, 0, 150, 130);
+      ctx.clearRect(0, 0, 160, 130);
       ctx.strokeStyle = "black";
       ctx.fillStyle = "black";
+
+     
 
       //クリック座標取得と計算, border分-2
       var rect = e.target.getBoundingClientRect();
@@ -130,6 +143,8 @@
       if(x >= -1 && x <=1 && y >= -1 && y <=1){
         ctx.fillText(`座標 x=${x}, y=${y}`,30, 30);
       }
+
+      
   });
   }
 
@@ -140,10 +155,14 @@
     //描画クリア
     ctx.clearRect(0, 0, canvasW, canvasH);
 
+    ctx.fillText(`複素正弦波の振幅・位相・周波数`,400, 20);
+    
+    
     //座標軸のスタイル指定
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "black";
-    ctx.fillStyle = "black";
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "rgb(105,105,105)";
+    ctx.fillStyle = "rgb(105,105,105)";
+    ctx.font = '10pt Arial';
     var axisLength = 125;//軸の長さ
 
     //x軸描画
@@ -175,13 +194,13 @@
     //座標軸の文字と円を描画
     ctx.beginPath();
     var maxWidth = 100;
-    ctx.fillText('0', oX - 13, oY + 13, maxWidth);
-    ctx.fillText('-1', oX - 115, oY + 13, maxWidth);
-    ctx.fillText('1', oX + 105, oY + 13, maxWidth);
-    ctx.fillText('+j', oX - 17, oY - 105, maxWidth);
-    ctx.fillText('-j', oX - 13, oY + 112, maxWidth);
-    ctx.fillText('虚部', oX - 10, oY - axisLength - 10, maxWidth);
-    ctx.fillText('実部', oX + axisLength + 10, oY + 4, maxWidth);
+    ctx.fillText('0', oX - 13, oY + 15, maxWidth);
+    ctx.fillText('-1', oX - 117, oY + 15, maxWidth);
+    ctx.fillText('1', oX + 105, oY + 15, maxWidth);
+    ctx.fillText('+j', oX - 20, oY - 107, maxWidth);
+    ctx.fillText('-j', oX - 15, oY + 115, maxWidth);
+    ctx.fillText('虚部', oX - 10, oY - axisLength - 6, maxWidth);
+    ctx.fillText('実部', oX + axisLength + 5, oY + 4, maxWidth);
     ctx.arc(oX, oY, 100, 0, 2 * Math.PI, true);
     ctx.stroke();//表示
 
@@ -200,6 +219,14 @@
     ctx.moveTo(450, 125);
     ctx.lineTo(450,375);
     ctx.stroke();
+
+    ctx.beginPath();
+    var maxWidth = 100;
+    ctx.fillText('0', 438, oY + 15, maxWidth);
+    ctx.fillText('-1', 434, 367, maxWidth);
+    ctx.fillText('1', oX + 105, oY + 15, maxWidth);
+
+    ctx.stroke();//表示
 
     //0.5
     ctx.beginPath();
