@@ -69,9 +69,8 @@
 
       var inputAng = document.getElementById('angular');
       console.log(inputAng.value);
-      var ang= 3;
+      var ang= inputAng.value;
 
-      //後々スライダーで変更できるようにする
       for (var i = 450; i <= 900; i += 1) {
         ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(ang*Math.PI*(i/450)+Math.atan2(y, x))));
       }
