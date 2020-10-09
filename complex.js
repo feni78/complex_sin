@@ -69,10 +69,11 @@
 
       var inputAng = document.getElementById('angular');
       console.log(inputAng.value);
+      ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 80);
       var ang= inputAng.value;
 
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(ang*Math.PI*(i/450)+Math.atan2(y, x))));
+        ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(ang*Math.PI*(i/450.0)+Math.atan2(y, x))));
       }
       ctx.setLineDash([]);
       ctx.stroke();
@@ -163,6 +164,7 @@
     ctx.fillStyle = "rgb(105,105,105)";
     ctx.font = '10pt Arial';
     var axisLength = 125;//軸の長さ
+    
 
     //x軸描画
     // x座標軸を描画
