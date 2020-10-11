@@ -67,22 +67,25 @@
       ctx.moveTo(450,250);//始点
 
 
+      var amp = Math.sqrt(x*x+y*y);//振幅
+      var p = Math.atan2(y, x);//初期位相
+      console.log(p);
       var inputAng = document.getElementById('angular');
-      console.log(inputAng.value);
       ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 80);
-      var ang= inputAng.value;
+      var af= inputAng.value;//角周波数
 
+      
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (Math.sqrt(x*x+y*y)*Math.sin(ang*Math.PI*(i/450.0)+Math.atan2(y, x))));
+        ctx.lineTo(i,250-100* (amp*Math.sin(af*Math.PI*(i/450.0)+p)));//sin波の計算
       }
       ctx.setLineDash([]);
       ctx.stroke();
-      ctx.fillText(`位相 x=${Math.round((ang*Math.PI*+Math.atan2(y, x))*1000)/1000}`, 300, 90);
+      ctx.fillText(`位相 x=${Math.round((af*Math.PI*+Math.atan2(y, x))*1000)/1000}`, 300, 90);
       //cos波1
       ctx.beginPath();
       ctx.moveTo(450,450);//始点
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,550-100* (Math.sqrt(x*x+y*y)*Math.cos(ang*Math.PI*(i/450)+Math.atan2(y, x))));
+        ctx.lineTo(i,550-100* (amp*Math.cos(af*Math.PI*(i/450.0)+p)));
       }
       ctx.stroke();
 
@@ -91,7 +94,7 @@
       ctx.moveTo(250,450);//始点
      
       for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(250+100* (Math.sqrt(x*x+y*y)*Math.cos(ang*Math.PI*(i/450)+Math.atan2(y, x))),i);
+        ctx.lineTo(250+100* (amp*Math.cos(af*Math.PI*(i/450.0)+p)),i);
       }
       ctx.stroke();
       //********************************************************
@@ -116,8 +119,8 @@
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.moveTo(clickX,550-100* (Math.sqrt(x*x+y*y)*Math.cos(ang*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
-      ctx.lineTo(1000, 550-100* (Math.sqrt(x*x+y*y)*Math.cos(ang*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.moveTo(clickX,550-100* (Math.sqrt(x*x+y*y)*Math.cos(af*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.lineTo(1000, 550-100* (Math.sqrt(x*x+y*y)*Math.cos(af*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
       ctx.stroke();
 
       //青線をもとに戻す
