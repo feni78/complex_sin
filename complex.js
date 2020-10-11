@@ -58,7 +58,7 @@
       ctx.stroke();
 
 
-      //********************************************************
+      //********************************************************以下完了
       //描線の設定
       ctx.beginPath();
       ctx.strokeStyle = "black";
@@ -72,7 +72,7 @@
       var af= inputAng.value;//角周波数
       var t = 1.0;//秒数
       ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 85);
-      ctx.fillText(`位相 x=${Math.atan2(y,x)}`, 300, 100);
+      ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 300, 100);
 
       //sin波
       ctx.moveTo(450,250);//始点
@@ -93,6 +93,7 @@
         var resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
         ctx.lineTo(resultX_cos+450.0,550.0-100.0* resultY_cos);
       }
+      ctx.setLineDash([]);
       ctx.stroke();
 
       //cos波2
@@ -103,11 +104,9 @@
         var resultY_cos2= i;
         ctx.lineTo(250.0+100.0*resultX_cos2, resultY_cos2+450.0);
       }
+      ctx.setLineDash([]);
       ctx.stroke();
-      //********************************************************
-
-
-
+      //********************************************************以上完了
       //青線に変更
       ctx.strokeStyle = "blue";
       ctx.fillStyle = "blue";
@@ -126,8 +125,8 @@
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.moveTo(clickX,550-100* (Math.sqrt(x*x+y*y)*Math.cos(af*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
-      ctx.lineTo(1000, 550-100* (Math.sqrt(x*x+y*y)*Math.cos(af*(Math.PI/180)*0.4*i+Math.atan2(y, x))));
+      ctx.moveTo(clickX,550.0-100.0*amp*Math.cos(p));
+      ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
       ctx.stroke();
 
       //青線をもとに戻す
