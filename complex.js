@@ -59,33 +59,36 @@
 
 
       //********************************************************
-      //sin波
       ctx.beginPath();
       ctx.strokeStyle = "black";
       ctx.lineWidth = 2;
       ctx.setLineDash([1, 1]);
-      ctx.moveTo(450,250);//始点
-
-
+      
+      //パラメータ
       var amp = Math.sqrt(x*x+y*y);//振幅
       var p = Math.atan2(y, x);//初期位相
-      console.log(p);
       var inputAng = document.getElementById('angular');
-      ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 80);
+      ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 85);
       var af= inputAng.value;//角周波数
 
-      
-      for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,250-100* (amp*Math.sin(af*Math.PI*(i/450.0)+p)));//sin波の計算
+      //sin波
+      ctx.moveTo(450,250);//始点
+      for (var i = 0.0; i <= 450.0; i += 1.0) {
+        var resultX_sin = i;
+        var resultY_sin = amp*Math.sin(af*Math.PI*(i/450.0)+p);
+        ctx.lineTo(resultX_sin +450.0,250.0-100.0*resultY_sin);
       }
       ctx.setLineDash([]);
       ctx.stroke();
-      ctx.fillText(`位相 x=${Math.round((af*Math.PI*+Math.atan2(y, x))*1000)/1000}`, 300, 90);
+      ctx.fillText(`位相 x=${Math.atan2(y,x)}`, 300, 100);
+
       //cos波1
       ctx.beginPath();
       ctx.moveTo(450,450);//始点
-      for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(i,550-100* (amp*Math.cos(af*Math.PI*(i/450.0)+p)));
+      for (var i = 0.0; i <= 450.0; i += 1.0) {
+        var resultX_cos = i;
+        var resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
+        ctx.lineTo(resultX_cos+450.0,550.0-100.0* resultY_cos);
       }
       ctx.stroke();
 
@@ -93,8 +96,10 @@
       ctx.beginPath();
       ctx.moveTo(250,450);//始点
      
-      for (var i = 450; i <= 900; i += 1) {
-        ctx.lineTo(250+100* (amp*Math.cos(af*Math.PI*(i/450.0)+p)),i);
+      for (var i = 0.0; i <= 450.0; i += 1.0) {
+        var resultX_cos2 = amp*Math.cos(af*Math.PI*(i/450.0)+p)
+        var resultY_cos2= i;
+        ctx.lineTo(250.0+100.0*resultX_cos2, resultY_cos2+450.0);
       }
       ctx.stroke();
       //********************************************************
