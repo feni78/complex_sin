@@ -11,8 +11,8 @@
   var clickY;//クリック座標y
 
   var img_sin = new Image();
-  img_sin.src = "img/sin.png";
   var img_cos = new Image();
+  img_sin.src = "img/sin.png";
   img_cos.src = "img/cos.png";
   
 
@@ -36,11 +36,7 @@
         clickX = e.clientX - Math.floor(rect.left)-2;
         clickY = e.clientY - Math.floor(rect.top)-2 ;
         
-        //クリック位置の点を描画
-        ctx.beginPath(); // パスの初期化
-        ctx.arc(clickX, clickY, 5, 0, Math.PI*2);
-        ctx.closePath(); // パスを閉じる
-        ctx.fill(); // 軌跡の範囲を塗りつぶす
+        
 
         //表示する座標値の計算
         var x = (clickX - oX)/100;//原点からの距離を変換してxに代入
@@ -56,8 +52,38 @@
         ctx.lineTo(oX, oY);
         ctx.stroke();
 
+        //********************************************************
+        //青線に変更
+        ctx.strokeStyle = "#fecdcc";
+        ctx.fillStyle = "#fecdcc";
+        ctx.setLineDash([2, 2]);
 
-        //********************************************************以下完了
+        //クリック座標から伸びる横線
+        ctx.beginPath();
+        ctx.moveTo(clickX,clickY);
+        ctx.lineTo(1000, clickY);
+        ctx.stroke();
+
+        //クリック座標から伸びる縦線
+        ctx.beginPath();
+        ctx.moveTo(clickX, clickY);
+        ctx.lineTo(clickX, 1000);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(clickX,550.0-100.0*amp*Math.cos(p));
+        ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
+        ctx.stroke();
+
+        //青線をもとに戻す
+        ctx.setLineDash([]);
+        ctx.fillStyle = "rgb(105,105,105)";
+        //クリック位置の点を描画
+        ctx.beginPath(); // パスの初期化
+        ctx.arc(clickX, clickY, 5, 0, Math.PI*2);
+        ctx.closePath(); // パスを閉じる
+        ctx.fill(); // 軌跡の範囲を塗りつぶす
+        //********************************************************
         //描線の設定
         ctx.beginPath();
         ctx.strokeStyle = "#b22222";
@@ -106,31 +132,8 @@
         }
         ctx.setLineDash([]);
         ctx.stroke();
-        //********************************************************以上完了
-        //青線に変更
-        ctx.strokeStyle = "#fecdcc";
-        ctx.fillStyle = "#d3def1";
-        ctx.setLineDash([2, 2]);
-
-        //クリック座標から伸びる横線
-        ctx.beginPath();
-        ctx.moveTo(clickX,clickY);
-        ctx.lineTo(1000, clickY);
-        ctx.stroke();
-
-        //クリック座標から伸びる縦線
-        ctx.beginPath();
-        ctx.moveTo(clickX, clickY);
-        ctx.lineTo(clickX, 1000);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(clickX,550.0-100.0*amp*Math.cos(p));
-        ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
-        ctx.stroke();
-
-        //青線をもとに戻す
-        ctx.setLineDash([]);
+        //********************************************************
+        
       }
     });
 
