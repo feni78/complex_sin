@@ -23,8 +23,6 @@
     oY = Math.ceil(canvasH/4);
     drawInit();//座標軸初期化
     
-    
-
     //クリック時に行う描画の処理
     canvas.addEventListener("click", (e) => {
       if(clickX<352 && clickX>148&&clickY<352 &&clickY>148 ){
@@ -92,7 +90,7 @@
         ctx.beginPath();
         ctx.strokeStyle = "#c92e36";
         ctx.lineWidth = 2.5;
-        ctx.setLineDash([, ]);
+        ctx.setLineDash([]);
         
         //パラメータ2
         var inputAng = document.getElementById('angular');
@@ -114,12 +112,12 @@
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(557,875);
-        ctx.lineTo(620,875);
+        ctx.moveTo(557,878);
+        ctx.lineTo(665,878);
         ctx.stroke();
 
         ctx.setLineDash([1, 1]);
-        ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000}`, 560, 870);
+        ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000} [rad]`, 560, 870);
 
         //sin波
         ctx.moveTo(450,clickY);//始点
@@ -369,6 +367,5 @@
     ctx.fillText('角周波数 ω', 435, 745);
     ctx.fillText('振幅', 500, 825);
     ctx.fillText('位相', 500, 870);
-
   }
 }
