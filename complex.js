@@ -71,6 +71,8 @@
       var inputAng = document.getElementById('angular');
       var af= inputAng.value;//角周波数
       var t = 1.0;//秒数
+
+      //表示
       ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 85);
       ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 300, 100);
 
@@ -234,7 +236,10 @@
     var maxWidth = 100;
     ctx.fillText('0', 438, oY + 15, maxWidth);
     ctx.fillText('-1', 434, 367, maxWidth);
-    ctx.fillText('1', oX + 105, oY + 15, maxWidth);
+    ctx.fillText('1', 438, 165, maxWidth);
+    ctx.fillText('0.5', 666, 275, maxWidth);
+    ctx.fillText('1', 896, 275, maxWidth);
+    ctx.fillText('時間[t]', 930, 255, maxWidth);
 
     ctx.stroke();//表示
 

@@ -1,5 +1,9 @@
 body{
-  background-color:#f5f5f5;
+  background-color:#424242;
+ }
+ canvas{
+   background-color:white;
+   
  }
  input[type="range"] {
   -webkit-appearance: none; /* 🚩これ無しだとスタイルがほぼ全く反映されないので注意 */
