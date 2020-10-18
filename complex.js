@@ -42,8 +42,8 @@
         var x = (clickX - oX)/100;//原点からの距離を変換してxに代入
         var y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
         if(x >= -1 && x <=1 && y >= -1 && y <=1){
-          ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 300, 55);
-          ctx.fillText(`振幅 ${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 300, 70);
+          ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
+          ctx.fillText(`振幅 ${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 600, 700);
         }
 
         //原点からクリック座標に伸びる線
@@ -98,8 +98,9 @@
         var t = 1.0;//秒数
 
         //表示
-        ctx.fillText(`角周波数 ω = ${inputAng.value} π [rad/s]`, 700, 800);
-        ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 300, 100);
+        
+        ctx.fillText(`ω = ${inputAng.value} π [rad/s]`, 800, 745);
+        ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 600, 800);
 
         //sin波
         ctx.moveTo(450,clickY);//始点
@@ -147,10 +148,12 @@
       clickX = e.clientX - Math.floor(rect.left)-2;
       clickY = e.clientY - Math.floor(rect.top)-2 ;
 
+
       //表示する座標値の計算
       var x = (clickX - oX)/100;//原点からの距離を変換してxに代入
       var y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
       if(x >= -1 && x <=1 && y >= -1 && y <=1){
+        ctx.font = '10pt Arial';
         ctx.fillText(`座標 x=${x}, y=${y}`,30, 30);
       }
     });
@@ -163,7 +166,7 @@
     //描画クリア
     ctx.clearRect(0, 0, canvasW, canvasH);
     ctx.font = '15pt Arial';
-    ctx.fillText(`複素正弦波の振幅・位相・周波数`,400, 20);
+    ctx.fillText(`複素正弦波の振幅・位相・周波数`,350, 50);
     
     //座標軸のスタイル指定
     ctx.lineWidth = 1.5;
@@ -310,5 +313,12 @@
 
     ctx.drawImage(img_sin, 800,70, 139.5, 25.5);
     ctx.drawImage(img_cos, 800,370, 139.5, 25.5);
+
+    ctx.lineWidth = 3;
+    ctx.font = '15pt Arial';
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(500, 700, 415, 200);
+    ctx.fillText('角周波数', 520, 745);
+    ctx.fillText('振幅', 520, 825);
   }
 }

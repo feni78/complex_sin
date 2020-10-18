@@ -19,9 +19,9 @@ body{
   cursor: pointer;
   outline: none;
   height: 14px;
-  width: 30%;
+  width: 20%;
   background: #8acdff;
   border-radius: 10px;
   border: solid 3px #dff1ff;
-  transform:translateX(180%) translateY(-250px);
+  transform:translateX(285%) translateY(-280px);
 }
