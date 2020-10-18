@@ -53,6 +53,10 @@
         ctx.stroke();
 
         //********************************************************
+        //パラメータ1
+        var amp = Math.sqrt(x*x+y*y);//振幅
+        var p = Math.atan2(y, x);//初期位相
+
         //青線に変更
         ctx.strokeStyle = "#fecdcc";
         ctx.fillStyle = "#fecdcc";
@@ -90,9 +94,7 @@
         ctx.lineWidth = 2.5;
         ctx.setLineDash([1, 1]);
         
-        //パラメータ
-        var amp = Math.sqrt(x*x+y*y);//振幅
-        var p = Math.atan2(y, x);//初期位相
+        //パラメータ2
         var inputAng = document.getElementById('angular');
         var af= inputAng.value;//角周波数
         var t = 1.0;//秒数
@@ -237,7 +239,7 @@
     ctx.fillText('1', 438, 165, maxWidth);
     ctx.fillText('0.5', 666, 275, maxWidth);
     ctx.fillText('1', 896, 275, maxWidth);
-    ctx.fillText('時間t[s]', 930, 255, maxWidth);
+    ctx.fillText('時間 t [s]', 930, 255, maxWidth);
 
     ctx.stroke();//表示
 
