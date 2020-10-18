@@ -22,4 +22,5 @@ body{
   background: #8acdff; /* バーの背景色 */
   border-radius: 10px; /* バーの両端の丸み */
   border: solid 3px #dff1ff; /* バー周囲の線 */
+  transform:translateX(180%) translateY(-250px);
 }

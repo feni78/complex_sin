@@ -10,13 +10,19 @@
   var clickX;//クリック座標x
   var clickY;//クリック座標y
 
+  var img_sin = new Image();
+  img_sin.src = "img/sin.png";
+  var img_cos = new Image();
+  img_cos.src = "img/cos.png";
+  
+
   window.onload = function(){
     canvas.width = canvasW;//canvasサイズ設定
     canvas.height = canvasH;
     oX = Math.ceil(canvasW/4);//原点を求めて代入
     oY = Math.ceil(canvasH/4);
     drawInit();//座標軸初期化
-
+    
     
 
     //クリック時に行う描画の処理
@@ -29,8 +35,6 @@
         var rect = e.target.getBoundingClientRect();
         clickX = e.clientX - Math.floor(rect.left)-2;
         clickY = e.clientY - Math.floor(rect.top)-2 ;
-
-        
         
         //クリック位置の点を描画
         ctx.beginPath(); // パスの初期化
@@ -56,8 +60,8 @@
         //********************************************************以下完了
         //描線の設定
         ctx.beginPath();
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#b22222";
+        ctx.lineWidth = 2.5;
         ctx.setLineDash([1, 1]);
         
         //パラメータ
@@ -72,7 +76,7 @@
         ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 300, 100);
 
         //sin波
-        ctx.moveTo(450,250);//始点
+        ctx.moveTo(450,clickY);//始点
         for (var i = 0.0; i <= 450.0*t; i += 1.0) {
           var resultX_sin = i;
           var resultY_sin = amp*Math.sin(af*Math.PI*(i/450.0)+p);
@@ -83,7 +87,7 @@
 
         //cos波1
         ctx.beginPath();
-        ctx.moveTo(450,450);//始点
+        ctx.moveTo(450,550.0-100.0*amp*Math.cos(p));//始点
         for (var i = 0.0; i <= 450.0*t; i += 1.0) {
           var resultX_cos = i;
           var resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
@@ -94,7 +98,7 @@
 
         //cos波2
         ctx.beginPath();
-        ctx.moveTo(250,450);//始点
+        ctx.moveTo(clickX,450);//始点
         for (var i = 0.0; i <= 450.0*t; i += 1.0) {
           var resultX_cos2 = amp*Math.cos(af*Math.PI*(i/450.0)+p)
           var resultY_cos2= i;
@@ -104,9 +108,9 @@
         ctx.stroke();
         //********************************************************以上完了
         //青線に変更
-        ctx.strokeStyle = "blue";
-        ctx.fillStyle = "blue";
-        ctx.setLineDash([1, 1]);
+        ctx.strokeStyle = "#fecdcc";
+        ctx.fillStyle = "#d3def1";
+        ctx.setLineDash([2, 2]);
 
         //クリック座標から伸びる横線
         ctx.beginPath();
@@ -299,5 +303,8 @@
     ctx.moveTo(125, 450);
     ctx.lineTo(375,450);
     ctx.stroke();
+
+    ctx.drawImage(img_sin, 800,70, 139.5, 25.5);
+    ctx.drawImage(img_cos, 800,370, 139.5, 25.5);
   }
 }
