@@ -1,6 +1,5 @@
 'use strict'
 {
-
   var canvas = document.querySelector('canvas');//canvas取得
   var ctx = canvas.getContext('2d');//context取得
   var canvasW = 1000;//canvasの横幅
@@ -10,6 +9,7 @@
   var clickX;//クリック座標x
   var clickY;//クリック座標y
 
+  //画像読み込み
   var img_sin = new Image();
   var img_cos = new Image();
   img_sin.src = "img/sin.png";
@@ -42,8 +42,8 @@
         var x = (clickX - oX)/100;//原点からの距離を変換してxに代入
         var y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
         if(x >= -1 && x <=1 && y >= -1 && y <=1){
-          ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
-          ctx.fillText(`振幅 ${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 600, 700);
+          // ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
+          ctx.fillText(`${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 560, 825);
         }
 
         //原点からクリック座標に伸びる線
@@ -81,7 +81,7 @@
 
         //青線をもとに戻す
         ctx.setLineDash([]);
-        ctx.fillStyle = "rgb(105,105,105)";
+        ctx.fillStyle = "#696969";
         //クリック位置の点を描画
         ctx.beginPath(); // パスの初期化
         ctx.arc(clickX, clickY, 5, 0, Math.PI*2);
@@ -92,7 +92,7 @@
         ctx.beginPath();
         ctx.strokeStyle = "#c92e36";
         ctx.lineWidth = 2.5;
-        ctx.setLineDash([1, 1]);
+        ctx.setLineDash([, ]);
         
         //パラメータ2
         var inputAng = document.getElementById('angular');
@@ -100,9 +100,26 @@
         var t = 1.0;//秒数
 
         //表示
+        ctx.fillText(`${inputAng.value} π [rad/s]`, 860, 745);
+        ctx.strokeStyle = "#c92e36";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(860,753);
+        ctx.lineTo(965,753);
+        ctx.stroke();
         
-        ctx.fillText(`ω = ${inputAng.value} π [rad/s]`, 800, 745);
-        ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 600, 800);
+        ctx.beginPath();
+        ctx.moveTo(557,830);
+        ctx.lineTo(613,830);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(557,875);
+        ctx.lineTo(620,875);
+        ctx.stroke();
+
+        ctx.setLineDash([1, 1]);
+        ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000}`, 560, 870);
 
         //sin波
         ctx.moveTo(450,clickY);//始点
@@ -129,9 +146,9 @@
         ctx.beginPath();
         ctx.moveTo(clickX,450);//始点
         for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-          var resultX_cos2 = amp*Math.cos(af*Math.PI*(i/450.0)+p)
-          var resultY_cos2= i;
-          ctx.lineTo(250.0+100.0*resultX_cos2, resultY_cos2+450.0);
+          var resultX_cos2 = amp*Math.cos(af*Math.PI*(i / 450.0) + p)
+          var resultY_cos2 = i;
+          ctx.lineTo(250.0 + 100.0 * resultX_cos2, resultY_cos2 + 450.0);
         }
         ctx.setLineDash([]);
         ctx.stroke();
@@ -216,22 +233,19 @@
     ctx.arc(oX, oY, 100, 0, 2 * Math.PI, true);
     ctx.stroke();//表示
 
+
     //右座標軸
     ctx.beginPath();
-    ctx.moveTo(425, 250);
+    ctx.moveTo(425,250);
     ctx.lineTo(925,250);
     ctx.stroke();
-    // // y座標軸の矢印を描画
-    // ctx.beginPath();
-    // ctx.moveTo(925, 250);
-    // ctx.lineTo(925 - 7, 250 - 10);
-    // ctx.lineTo(925 + 7, 250 + 10);
-    // ctx.fill();
+
     ctx.beginPath();
-    ctx.moveTo(450, 125);
+    ctx.moveTo(450,125);
     ctx.lineTo(450,375);
     ctx.stroke();
 
+    //軸ラベル
     ctx.beginPath();
     var maxWidth = 100;
     ctx.fillText('0', 438, oY + 15, maxWidth);
@@ -240,87 +254,121 @@
     ctx.fillText('0.5', 666, 275, maxWidth);
     ctx.fillText('1', 896, 275, maxWidth);
     ctx.fillText('時間 t [s]', 930, 255, maxWidth);
-
     ctx.stroke();//表示
 
-    //0.5
+    //0.5目盛
     ctx.beginPath();
-    ctx.moveTo(675, 240);
+    ctx.moveTo(675,240);
     ctx.lineTo(675,260);
     ctx.stroke();
-    //1
+    //1目盛
     ctx.beginPath();
-    ctx.moveTo(900, 240);
+    ctx.moveTo(900,240);
     ctx.lineTo(900,260);
     ctx.stroke();
-    //tate1
+    //縦1目盛
     ctx.beginPath();
-    ctx.moveTo(445, 150);
+    ctx.moveTo(445,150);
     ctx.lineTo(455,150);
     ctx.stroke();
-    //tate-1
+    //縦-1目盛
     ctx.beginPath();
-    ctx.moveTo(445, 350);
+    ctx.moveTo(445,350);
     ctx.lineTo(455,350);
     ctx.stroke();
 
 
     //下座標軸
     ctx.beginPath();
-    ctx.moveTo(425, 550);
+    ctx.moveTo(425,550);
     ctx.lineTo(925,550);
     ctx.stroke();
-    // // y座標軸の矢印を描画
-    // ctx.beginPath();
-    // ctx.moveTo(925, 250);
-    // ctx.lineTo(925 - 7, 250 - 10);
-    // ctx.lineTo(925 + 7, 250 + 10);
-    // ctx.fill();
+
     ctx.beginPath();
-    ctx.moveTo(450, 425);
+    ctx.moveTo(450,425);
     ctx.lineTo(450,675);
     ctx.stroke();
 
-    //0.5
+    //軸ラベル
+    ctx.fillText('0', 438, oY + 315, maxWidth);
+    ctx.fillText('-1', 434, 667, maxWidth);
+    ctx.fillText('1', 438, 465, maxWidth);
+    ctx.fillText('0.5', 666, 575, maxWidth);
+    ctx.fillText('1', 896, 575, maxWidth);
+    ctx.fillText('時間 t [s]', 930, 555, maxWidth);
+
+    //0.5目盛
     ctx.beginPath();
-    ctx.moveTo(675, 540);
+    ctx.moveTo(675,540);
     ctx.lineTo(675,560);
     ctx.stroke();
-    //1
+    //1目盛
     ctx.beginPath();
-    ctx.moveTo(900, 540);
+    ctx.moveTo(900,540);
     ctx.lineTo(900,560);
     ctx.stroke();
     
-    //tate1
+    //縦1目盛
     ctx.beginPath();
-    ctx.moveTo(445, 450);
+    ctx.moveTo(445,450);
     ctx.lineTo(455,450);
     ctx.stroke();
-    //tate-1
+    //縦-1目盛
     ctx.beginPath();
-    ctx.moveTo(445, 650);
+    ctx.moveTo(445,650);
     ctx.lineTo(455,650);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.moveTo(250, 425);
+    ctx.moveTo(250,425);
     ctx.lineTo(250,975);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.moveTo(125, 450);
+    ctx.moveTo(125,450);
     ctx.lineTo(375,450);
     ctx.stroke();
 
-    ctx.drawImage(img_sin, 800,70, 139.5, 25.5);
-    ctx.drawImage(img_cos, 800,370, 139.5, 25.5);
+    //角周波数目盛
+    ctx.beginPath();
+    ctx.moveTo(553,765);
+    ctx.lineTo(849,765);
+    ctx.stroke();
 
+    for(var i = 0; i <= 20; i += 1){
+      ctx.beginPath();
+      ctx.moveTo(558.5 + i*14.2, 753);
+      ctx.lineTo(558.5+ i*14.2, 765);
+      ctx.stroke();
+    }
+    ctx.fillText('0', 554, 783, maxWidth);
+    ctx.fillText('2', 583, 783, maxWidth);
+    ctx.fillText('4', 612, 783, maxWidth);
+    ctx.fillText('6', 641, 783, maxWidth);
+    ctx.fillText('8', 668, 783, maxWidth);
+    ctx.fillText('10', 692, 783, maxWidth);
+    ctx.fillText('12', 721, 783, maxWidth);
+    ctx.fillText('14', 749, 783, maxWidth);
+    ctx.fillText('16', 777, 783, maxWidth);
+    ctx.fillText('18', 805, 783, maxWidth);
+    ctx.fillText('20 π', 835, 783, maxWidth);
+
+    
+
+    //画像配置
+    ctx.drawImage(img_sin, 800,100, 139.5, 25.5);
+    ctx.drawImage(img_cos, 800,400, 139.5, 25.5);
+
+    //右下パラメータ描画
     ctx.lineWidth = 3;
     ctx.font = '15pt Arial';
-    ctx.strokeStyle = "black";
-    ctx.strokeRect(500, 700, 415, 200);
-    ctx.fillText('角周波数', 520, 745);
-    ctx.fillText('振幅', 520, 825);
+    ctx.setLineDash([0.5,0.5]);
+    ctx.strokeStyle = "gray";
+    ctx.strokeRect(420, 710, 555, 180);
+    ctx.setLineDash([]);
+    ctx.fillText('角周波数 ω', 435, 745);
+    ctx.fillText('振幅', 500, 825);
+    ctx.fillText('位相', 500, 870);
+
   }
 }
