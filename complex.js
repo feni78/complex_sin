@@ -86,7 +86,7 @@
         //********************************************************
         //描線の設定
         ctx.beginPath();
-        ctx.strokeStyle = "#b22222";
+        ctx.strokeStyle = "#c92e36";
         ctx.lineWidth = 2.5;
         ctx.setLineDash([1, 1]);
         
@@ -98,7 +98,7 @@
         var t = 1.0;//秒数
 
         //表示
-        ctx.fillText(`角周波数 ω= ${inputAng.value}π[rad/s]`, 300, 85);
+        ctx.fillText(`角周波数 ω = ${inputAng.value} π [rad/s]`, 700, 800);
         ctx.fillText(`位相 x=${Math.round(Math.atan2(y,x)*1000)/1000}`, 300, 100);
 
         //sin波
@@ -162,13 +162,14 @@
     }
     //描画クリア
     ctx.clearRect(0, 0, canvasW, canvasH);
+    ctx.font = '15pt Arial';
     ctx.fillText(`複素正弦波の振幅・位相・周波数`,400, 20);
     
     //座標軸のスタイル指定
     ctx.lineWidth = 1.5;
-    ctx.strokeStyle = "rgb(105,105,105)";
-    ctx.fillStyle = "rgb(105,105,105)";
-    ctx.font = '10pt Arial';
+    ctx.strokeStyle = "#b4b4b4";
+    ctx.fillStyle = "#696969";
+    ctx.font = '11pt Arial';
     var axisLength = 125;//軸の長さ
 
     //x軸描画
@@ -233,7 +234,7 @@
     ctx.fillText('1', 438, 165, maxWidth);
     ctx.fillText('0.5', 666, 275, maxWidth);
     ctx.fillText('1', 896, 275, maxWidth);
-    ctx.fillText('時間[t]', 930, 255, maxWidth);
+    ctx.fillText('時間t[s]', 930, 255, maxWidth);
 
     ctx.stroke();//表示
 
