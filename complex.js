@@ -49,11 +49,9 @@
     clickAng.addEventListener("click", byouga2, false);
       
   function byouga(e){
-    console.log(clickX);
     if(clickX<352 && clickX>148&&clickY<352 &&clickY>148){
       //座標軸初期化
       drawInit();
-
     //クリック座標取得と計算, border分-2
     rect = e.target.getBoundingClientRect();
     clickX = e.clientX - Math.floor(rect.left)-2;
@@ -182,11 +180,7 @@
 }
 
 function byouga2(e){
-  console.log("b");
-  
   drawInit();
-  console.log(clickX2);
-  console.log(clickX);
     // ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
     ctx.fillText(`${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 560, 825);
   
