@@ -10,22 +10,22 @@
   var clickY;//クリック座標y
   var x;
   var y;
-  var amp;
-  var p;
+  var amp;//振幅
+  var p;//初期位相
   var inputAng;
   var af;
   var t;
   var resultX_cos;
-      var resultY_cos;
-      var resultX_cos2;
-      var resultY_cos2;
-      var resultX_sin;
-      var resultY_sin;
-      var resultX_sin2;
-      var resultY_sin2;
-      var rect;
-      var clickX2;
-      var clickY2;
+  var resultY_cos;
+  var resultX_cos2;
+  var resultY_cos2;
+  var resultX_sin;
+  var resultY_sin;
+  var resultX_sin2;
+  var resultY_sin2;
+  var rect;
+  var clickX2;
+  var clickY2;
 
   //画像読み込み
   var img_sin = new Image();
@@ -36,269 +36,271 @@
   var clickAng =document.getElementById("angular");
 
   window.onload = function(){
-    canvas.width = canvasW;//canvasサイズ設定
+    canvas.width = canvasW;
     canvas.height = canvasH;
-    oX = Math.ceil(canvasW/4);//原点を求めて代入
+    oX = Math.ceil(canvasW/4);// 原点計算
     oY = Math.ceil(canvasH/4);
     drawInit();//座標軸初期化
     
-    
     //クリック時に行う描画の処理
-    canvas.addEventListener("click", byouga, false);
-
-    clickAng.addEventListener("click", byouga2, false);
+    canvas.addEventListener("click", draw, false);
+    clickAng.addEventListener("click", redraw, false);
       
-  function byouga(e){
-    if(clickX<352 && clickX>148&&clickY<352 &&clickY>148){
-      //座標軸初期化
+    //単位円クリック時の描画
+    function draw(e){
+      if(clickX<352 && clickX>148&&clickY<352 &&clickY>148){
+
+        //座標軸初期化
+        drawInit();
+
+        //クリック座標取得と計算, border分-2
+        rect = e.target.getBoundingClientRect();
+        clickX = e.clientX - Math.floor(rect.left)-2;
+        clickY = e.clientY - Math.floor(rect.top)-2 ;
+
+        clickX2 = clickX;//クリック座標を保存
+        clickY2 = clickY;
+        
+        //表示する座標値の計算
+        x = (clickX - oX)/100;//原点からの距離を変換してxに代入
+        y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
+        if(x >= -1 && x <=1 && y >= -1 && y <=1){
+          // ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
+          ctx.fillText(`${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 560, 825);
+        }
+
+        //原点からクリック座標に伸びる線
+        ctx.beginPath();
+        ctx.moveTo(clickX,clickY);
+        ctx.lineTo(oX, oY);
+        ctx.stroke();
+
+        //********************************************************
+        //パラメータ1
+        amp = Math.sqrt(x*x+y*y);//振幅
+        p = Math.atan2(y, x);//初期位相
+
+        //青線に変更
+        ctx.strokeStyle = "#fecdcc";
+        ctx.fillStyle = "#fecdcc";
+        ctx.setLineDash([2, 2]);
+
+        //クリック座標から伸びる横線
+        ctx.beginPath();
+        ctx.moveTo(clickX,clickY);
+        ctx.lineTo(1000, clickY);
+        ctx.stroke();
+
+        //クリック座標から伸びる縦線
+        ctx.beginPath();
+        ctx.moveTo(clickX, clickY);
+        ctx.lineTo(clickX, 1000);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(clickX,550.0-100.0*amp*Math.cos(p));
+        ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
+        ctx.stroke();
+
+        //青線をもとに戻す
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#696969";
+
+        //クリック位置の点を描画
+        ctx.beginPath(); // パスの初期化
+        ctx.arc(clickX, clickY, 5, 0, Math.PI*2);
+        ctx.closePath(); // パスを閉じる
+        ctx.fill(); // 軌跡の範囲を塗りつぶす
+
+        //********************************************************
+        //描線の設定
+        ctx.beginPath();
+        ctx.strokeStyle = "#c92e36";
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash([]);
+        
+        //パラメータ2
+        inputAng = document.getElementById('angular');
+        af= inputAng.value;//角周波数
+        t = 1.0;//秒数
+
+        //表示
+        ctx.fillText(`${inputAng.value} π [rad/s]`, 860, 745);
+        ctx.strokeStyle = "#c92e36";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(860,753);
+        ctx.lineTo(965,753);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(557,830);
+        ctx.lineTo(613,830);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(557,878);
+        ctx.lineTo(665,878);
+        ctx.stroke();
+
+        ctx.setLineDash([1, 1]);
+        ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000} [rad]`, 560, 870);
+
+        //sin波
+        ctx.moveTo(450,clickY);//始点
+        for (var i = 0.0; i <= 450.0*t; i += 1.0) {
+          var resultX_sin = i;
+          var resultY_sin = amp*Math.sin(af*Math.PI*(i/450.0)+p);
+          ctx.lineTo(resultX_sin +450.0,250.0-100.0*resultY_sin);
+        }
+        ctx.setLineDash([]);
+        ctx.stroke();
+
+        //cos波1
+        ctx.beginPath();
+        ctx.moveTo(450,550.0-100.0*amp*Math.cos(p));//始点
+        for (var i = 0.0; i <= 450.0*t; i += 1.0) {
+          resultX_cos = i;
+          resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
+          ctx.lineTo(resultX_cos+450.0,550.0-100.0* resultY_cos);
+        }
+        ctx.setLineDash([]);
+        ctx.stroke();
+
+        //cos波2
+        ctx.beginPath();
+        ctx.moveTo(clickX,450);//始点
+        for (var i = 0.0; i <= 450.0*t; i += 1.0) {
+          resultX_cos2 = amp*Math.cos(af*Math.PI*(i / 450.0) + p)
+          resultY_cos2 = i;
+          ctx.lineTo(250.0 + 100.0 * resultX_cos2, resultY_cos2 + 450.0);
+        }
+        ctx.setLineDash([]);
+        ctx.stroke();
+        //********************************************************
+      }
+    }
+
+    function redraw(e){
       drawInit();
-    //クリック座標取得と計算, border分-2
-    rect = e.target.getBoundingClientRect();
-    clickX = e.clientX - Math.floor(rect.left)-2;
-    clickY = e.clientY - Math.floor(rect.top)-2 ;
-    
-    clickX2 = clickX;
-    clickY2 = clickY;
-    
-
-    //表示する座標値の計算
-    x = (clickX - oX)/100;//原点からの距離を変換してxに代入
-    y = -(clickY - oY)/100;//原点からの距離を変換してyに代入
-    if(x >= -1 && x <=1 && y >= -1 && y <=1){
-      // ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
       ctx.fillText(`${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 560, 825);
-    }
+  
+      //原点からクリック座標に伸びる線の再描画
+      ctx.beginPath();
+      ctx.moveTo(clickX2,clickY2);
+      ctx.lineTo(oX, oY);
+      ctx.stroke();
 
-    //原点からクリック座標に伸びる線
-    ctx.beginPath();
-    ctx.moveTo(clickX,clickY);
-    ctx.lineTo(oX, oY);
-    ctx.stroke();
+      //********************************************************
+      //パラメータ1の再計算
+      amp = Math.sqrt(x*x+y*y);//振幅
+      p = Math.atan2(y, x);//初期位相
 
-    //********************************************************
-    //パラメータ1
-    amp = Math.sqrt(x*x+y*y);//振幅
-    p = Math.atan2(y, x);//初期位相
+      //青線に変更
+      ctx.strokeStyle = "#fecdcc";
+      ctx.fillStyle = "#fecdcc";
+      ctx.setLineDash([2, 2]);
 
-    //青線に変更
-    ctx.strokeStyle = "#fecdcc";
-    ctx.fillStyle = "#fecdcc";
-    ctx.setLineDash([2, 2]);
+      //クリック座標から伸びる横線の再描画
+      ctx.beginPath();
+      ctx.moveTo(clickX2,clickY2);
+      ctx.lineTo(1000, clickY2);
+      ctx.stroke();
 
-    //クリック座標から伸びる横線
-    ctx.beginPath();
-    ctx.moveTo(clickX,clickY);
-    ctx.lineTo(1000, clickY);
-    ctx.stroke();
+      //クリック座標から伸びる縦線の再描画
+      ctx.beginPath();
+      ctx.moveTo(clickX2, clickY2);
+      ctx.lineTo(clickX2, 1000);
+      ctx.stroke();
 
-    //クリック座標から伸びる縦線
-    ctx.beginPath();
-    ctx.moveTo(clickX, clickY);
-    ctx.lineTo(clickX, 1000);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(clickX,550.0-100.0*amp*Math.cos(p));
-    ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
-    ctx.stroke();
-
-    //青線をもとに戻す
-    ctx.setLineDash([]);
-    ctx.fillStyle = "#696969";
-    //クリック位置の点を描画
-    ctx.beginPath(); // パスの初期化
-    ctx.arc(clickX, clickY, 5, 0, Math.PI*2);
-    ctx.closePath(); // パスを閉じる
-    ctx.fill(); // 軌跡の範囲を塗りつぶす
-    //********************************************************
-    //描線の設定
-    ctx.beginPath();
-    ctx.strokeStyle = "#c92e36";
-    ctx.lineWidth = 2.5;
-    ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.moveTo(clickX2,550.0-100.0*amp*Math.cos(p));
+      ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
+      ctx.stroke();
     
-    //パラメータ2
-    inputAng = document.getElementById('angular');
-    af= inputAng.value;//角周波数
-    t = 1.0;//秒数
+      ctx.beginPath();
+      ctx.moveTo(clickX2,550.0-100.0*amp*Math.cos(p));
+      ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
+      ctx.stroke();
 
-    //表示
-    ctx.fillText(`${inputAng.value} π [rad/s]`, 860, 745);
-    ctx.strokeStyle = "#c92e36";
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.moveTo(860,753);
-    ctx.lineTo(965,753);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(557,830);
-    ctx.lineTo(613,830);
-    ctx.stroke();
+      //青線をもとに戻す
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#696969";
 
-    ctx.beginPath();
-    ctx.moveTo(557,878);
-    ctx.lineTo(665,878);
-    ctx.stroke();
+      //クリック位置の点を描画
+      ctx.beginPath(); // パスの初期化
+      ctx.arc(clickX2, clickY2, 5, 0, Math.PI*2);
+      ctx.closePath(); // パスを閉じる
+      ctx.fill(); // 軌跡の範囲を塗りつぶす
 
-    ctx.setLineDash([1, 1]);
-    ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000} [rad]`, 560, 870);
+      //********************************************************
+      //描線の設定
+      ctx.beginPath();
+      ctx.strokeStyle = "#c92e36";
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([]);
+      
+      //パラメータ2
+      inputAng = document.getElementById('angular');
+      af= inputAng.value;//角周波数
+      t = 1.0;//秒数
 
-    //sin波
-    ctx.moveTo(450,clickY);//始点
-    for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-      var resultX_sin = i;
-      var resultY_sin = amp*Math.sin(af*Math.PI*(i/450.0)+p);
-      ctx.lineTo(resultX_sin +450.0,250.0-100.0*resultY_sin);
+      //表示
+      ctx.fillText(`${inputAng.value} π [rad/s]`, 860, 745);
+      ctx.strokeStyle = "#c92e36";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(860,753);
+      ctx.lineTo(965,753);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(557,830);
+      ctx.lineTo(613,830);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(557,878);
+      ctx.lineTo(665,878);
+      ctx.stroke();
+
+      ctx.setLineDash([1, 1]);
+      ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000} [rad]`, 560, 870);
+
+      //sin波
+      ctx.moveTo(450,clickY2);//始点
+      for (var i = 0.0; i <= 450.0*t; i += 1.0) {
+        resultX_sin = i;
+        resultY_sin = amp*Math.sin(af*Math.PI*(i/450.0)+p);
+        ctx.lineTo(resultX_sin +450.0,250.0-100.0*resultY_sin);
+      }
+      ctx.setLineDash([]);
+      ctx.stroke();
+
+      //cos波1
+      ctx.beginPath();
+      ctx.moveTo(450,550.0-100.0*amp*Math.cos(p));//始点
+      for (var i = 0.0; i <= 450.0*t; i += 1.0) {
+        resultX_cos = i;
+        resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
+        ctx.lineTo(resultX_cos+450.0,550.0-100.0* resultY_cos);
+      }
+      ctx.setLineDash([]);
+      ctx.stroke();
+
+      //cos波2
+      ctx.beginPath();
+      ctx.moveTo(clickX2,450);//始点
+      for (var i = 0.0; i <= 450.0*t; i += 1.0) {
+        resultX_cos2 = amp*Math.cos(af*Math.PI*(i / 450.0) + p)
+        resultY_cos2 = i;
+        ctx.lineTo(250.0 + 100.0 * resultX_cos2, resultY_cos2 + 450.0);
+      }
+      ctx.setLineDash([]);
+      ctx.stroke();
+      //********************************************************
+
     }
-    ctx.setLineDash([]);
-    ctx.stroke();
-
-    //cos波1
-    ctx.beginPath();
-    ctx.moveTo(450,550.0-100.0*amp*Math.cos(p));//始点
-    for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-      resultX_cos = i;
-      resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
-      ctx.lineTo(resultX_cos+450.0,550.0-100.0* resultY_cos);
-    }
-    ctx.setLineDash([]);
-    ctx.stroke();
-
-    //cos波2
-    ctx.beginPath();
-    ctx.moveTo(clickX,450);//始点
-    for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-      resultX_cos2 = amp*Math.cos(af*Math.PI*(i / 450.0) + p)
-      resultY_cos2 = i;
-      ctx.lineTo(250.0 + 100.0 * resultX_cos2, resultY_cos2 + 450.0);
-    }
-    ctx.setLineDash([]);
-    ctx.stroke();
-    //********************************************************
-  }
-}
-
-function byouga2(e){
-  drawInit();
-    // ctx.fillText(`取得座標 x = ${x}, y = ${y}`, 600, 700);
-    ctx.fillText(`${Math.round(Math.sqrt(x*x+y*y)*1000)/1000}`, 560, 825);
-  
-//原点からクリック座標に伸びる線
-ctx.beginPath();
-ctx.moveTo(clickX2,clickY2);
-ctx.lineTo(oX, oY);
-ctx.stroke();
-
-  //********************************************************
-  //パラメータ1
-  amp = Math.sqrt(x*x+y*y);//振幅
-  p = Math.atan2(y, x);//初期位相
-
-  //青線に変更
-  ctx.strokeStyle = "#fecdcc";
-  ctx.fillStyle = "#fecdcc";
-  ctx.setLineDash([2, 2]);
-
-  //クリック座標から伸びる横線
-    ctx.beginPath();
-    ctx.moveTo(clickX2,clickY2);
-    ctx.lineTo(1000, clickY2);
-    ctx.stroke();
-
-    //クリック座標から伸びる縦線
-    ctx.beginPath();
-    ctx.moveTo(clickX2, clickY2);
-    ctx.lineTo(clickX2, 1000);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(clickX2,550.0-100.0*amp*Math.cos(p));
-    ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
-    ctx.stroke();
-
- 
-  ctx.beginPath();
-  ctx.moveTo(clickX2,550.0-100.0*amp*Math.cos(p));
-  ctx.lineTo(1000,550.0-100.0*amp*Math.cos(p));
-  ctx.stroke();
-
-  //青線をもとに戻す
-  ctx.setLineDash([]);
-  ctx.fillStyle = "#696969";
-  //クリック位置の点を描画
-  ctx.beginPath(); // パスの初期化
-  ctx.arc(clickX2, clickY2, 5, 0, Math.PI*2);
-  ctx.closePath(); // パスを閉じる
-  ctx.fill(); // 軌跡の範囲を塗りつぶす
-  //********************************************************
-  //描線の設定
-  ctx.beginPath();
-  ctx.strokeStyle = "#c92e36";
-  ctx.lineWidth = 2.5;
-  ctx.setLineDash([]);
-  
-  //パラメータ2
-  inputAng = document.getElementById('angular');
-  af= inputAng.value;//角周波数
-  t = 1.0;//秒数
-
-  //表示
-  ctx.fillText(`${inputAng.value} π [rad/s]`, 860, 745);
-  ctx.strokeStyle = "#c92e36";
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.moveTo(860,753);
-  ctx.lineTo(965,753);
-  ctx.stroke();
-  
-  ctx.beginPath();
-  ctx.moveTo(557,830);
-  ctx.lineTo(613,830);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(557,878);
-  ctx.lineTo(665,878);
-  ctx.stroke();
-
-  ctx.setLineDash([1, 1]);
-  ctx.fillText(`${Math.round(Math.atan2(y,x)*1000)/1000} [rad]`, 560, 870);
-
-  //sin波
-  ctx.moveTo(450,clickY2);//始点
-  for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-    resultX_sin = i;
-    resultY_sin = amp*Math.sin(af*Math.PI*(i/450.0)+p);
-    ctx.lineTo(resultX_sin +450.0,250.0-100.0*resultY_sin);
-  }
-  ctx.setLineDash([]);
-  ctx.stroke();
-
-  //cos波1
-  ctx.beginPath();
-  ctx.moveTo(450,550.0-100.0*amp*Math.cos(p));//始点
-  for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-    resultX_cos = i;
-    resultY_cos = amp*Math.cos(af*Math.PI*(i/450.0)+p);
-    ctx.lineTo(resultX_cos+450.0,550.0-100.0* resultY_cos);
-  }
-  ctx.setLineDash([]);
-  ctx.stroke();
-
-  //cos波2
-  ctx.beginPath();
-  ctx.moveTo(clickX2,450);//始点
-  for (var i = 0.0; i <= 450.0*t; i += 1.0) {
-    resultX_cos2 = amp*Math.cos(af*Math.PI*(i / 450.0) + p)
-    resultY_cos2 = i;
-    ctx.lineTo(250.0 + 100.0 * resultX_cos2, resultY_cos2 + 450.0);
-  }
-  ctx.setLineDash([]);
-  ctx.stroke();
-  //********************************************************
-
-}
 
 
     canvas.addEventListener("mousemove", (e) => {
@@ -330,7 +332,7 @@ ctx.stroke();
     ctx.clearRect(0, 0, canvasW, canvasH);
     ctx.font = '15pt Arial';
     ctx.fillText(`複素正弦波の振幅・位相・周波数`,350, 50);
-    
+      
     //座標軸のスタイル指定
     ctx.lineWidth = 1.5;
     ctx.strokeStyle = "#b4b4b4";
@@ -496,8 +498,6 @@ ctx.stroke();
     ctx.fillText('16', 777, 783, maxWidth);
     ctx.fillText('18', 805, 783, maxWidth);
     ctx.fillText('20 π', 835, 783, maxWidth);
-
-    
 
     //画像配置
     ctx.drawImage(img_sin, 800,100, 139.5, 25.5);
