@@ -71,8 +71,8 @@
         y = -(clickY - oY)/100;
 
         // パラメータ1
-        amp = Math.sqrt(x*x+y*y);//振幅
-        p = Math.atan2(y, x);//初期位相
+        amp = Math.sqrt(x*x+y*y);
+        p = Math.atan2(y, x);
 
         if(x >= -1 && x <=1 && y >= -1 && y <=1){
           ctx.fillText(`${Math.round(amp*1000)/1000}`, 560, 825);
@@ -176,7 +176,7 @@
 
         // 下cos波描画
         ctx.beginPath();
-        ctx.moveTo(clickX,450);//始点
+        ctx.moveTo(clickX,450);
         for (var i = 0.0; i <= 450.0*t; i += 1.0) {
           resultX_cos2 = amp*Math.cos(af*Math.PI*(i / 450.0) + p)
           resultY_cos2 = i;
@@ -335,6 +335,8 @@
     // 描画クリア
     ctx.clearRect(0, 0, canvasW, canvasH);
     ctx.font = '15pt Arial';
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "black";
     ctx.fillText(`複素正弦波の振幅・位相・周波数`,350, 50);
       
     // 座標軸のスタイル指定
@@ -353,7 +355,7 @@
 
     // x座標軸の矢印を描画
     ctx.beginPath();
-    ctx.moveTo(canvasW -500 - axisLength, oY);//circleを左寄せするため-500
+    ctx.moveTo(canvasW -500 - axisLength, oY); // circleを左寄せするため-500
     ctx.lineTo(canvasW -500 - axisLength - 10, oY - 7);
     ctx.lineTo(canvasW -500 - axisLength - 10, oY + 7);
     ctx.fill();
